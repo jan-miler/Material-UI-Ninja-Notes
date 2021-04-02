@@ -6,27 +6,36 @@ import CardContent from "@material-ui/core/CardContent";
 import { IconButton, makeStyles, Typography } from "@material-ui/core";
 import { DeleteOutlined } from "@material-ui/icons";
 import Avatar from "@material-ui/core/Avatar";
-import { yellow, green, pink, blue } from "@material-ui/core/colors";
+import {
+  deepOrange,
+  deepPurple,
+  lightBlue,
+  lightGreen,
+} from "@material-ui/core/colors";
 
-const useStyles = makeStyles({
-  avatar: {
-    backgroundColor: note => {
-      if (note.category === "work") {
-        return yellow[700];
-      }
-      if (note.category === "money") {
-        return green[500];
-      }
-      if (note.category === "todos") {
-        return pink[500];
-      }
-      return blue[500];
+const useStyles = makeStyles(theme => {
+  return {
+    money: {
+      color: theme.palette.getContrastText(deepOrange[500]),
+      backgroundColor: deepOrange[500],
     },
-  },
+    todos: {
+      color: theme.palette.getContrastText(deepPurple[500]),
+      backgroundColor: deepPurple[500],
+    },
+    reminders: {
+      color: theme.palette.getContrastText(lightBlue[500]),
+      backgroundColor: lightBlue[500],
+    },
+    work: {
+      color: theme.palette.getContrastText(lightGreen[500]),
+      backgroundColor: lightGreen[500],
+    },
+  };
 });
 
 export default function NoteCard({ note, handleDelete }) {
-  const classes = useStyles(note);
+  const classes = useStyles();
 
   return (
     <div>
@@ -40,7 +49,7 @@ export default function NoteCard({ note, handleDelete }) {
           title={note.title}
           subheader={note.category}
           avatar={
-            <Avatar className={classes.avatar}>
+            <Avatar className={classes[note.category]}>
               {note.category[0].toUpperCase()}
             </Avatar>
           }

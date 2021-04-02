@@ -3,9 +3,29 @@ import { useEffect, useState } from "react";
 import Container from "@material-ui/core/Container";
 import NoteCard from "../components/NoteCard";
 import Masonry from "react-masonry-css";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles({
+  masonryGrid: {
+    display: "flex",
+    marginLeft: " -30px",
+    width: "auto",
+  },
+
+  masonryGridColumn: {
+    paddingLeft: "30px",
+    backgroundClip: "padding-box",
+
+    " &>div": {
+      marginBottom: "30px",
+    },
+  },
+});
 
 export default function Notes() {
   const [notes, setNotes] = useState([]);
+
+  const classes = useStyles();
 
   //getNotes
   useEffect(() => {
@@ -37,8 +57,8 @@ export default function Notes() {
     <Container>
       <Masonry
         breakpointCols={breakpoints}
-        className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column"
+        className={classes.masonryGrid}
+        columnClassName={classes.masonryGridColumn}
       >
         {notes.map(note => (
           <div key={note.id}>
